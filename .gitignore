@@ -1,0 +1,9 @@
+target/
+.classpath
+.project
+.settings/
+# Developer script files
+*.bat
+.idea/
+*.iml
+*.DS_Store

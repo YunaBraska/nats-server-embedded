@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILE:dev}
+  main:
+    banner-mode: off
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    logging.level.yuna.berlin: INFO

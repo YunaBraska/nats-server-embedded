@@ -1,0 +1,76 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: JAVA_CI_DAILY
+
+on:
+  workflow_dispatch:
+    branches: [ master ]
+  deployment:
+    branches: [ master ]
+  schedule:
+    - cron: '0 4 * * *'
+
+env:
+  SPRING_PROFILE: ci
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      #START_FILL_WITH UPDATE_AND_TEST
+      - uses: actions/checkout@v2
+      - name: Set up JDK 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - name: Maven compile and update dependencies
+        run: |
+          ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
+          ./mvnw -B -q clean verify -Dmaven.test.skip=true
+      - name: Run tests
+        run: ./mvnw -B clean verify
+      - name: Publish code coverage
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
+          verbose: false
+      - name: Publish code quality
+        uses: paambaati/codeclimate-action@v2.7.4
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+          JACOCO_SOURCE_PATH: "${{github.workspace}}/src/main/java"
+        with:
+          coverageLocations: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
+      - name: Tag and Push
+        run: .github/scripts/push_changes.sh "https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}"
+      #END_FILL_WITH UPDATE_AND_TEST
+      - name: "Check if branch exists"
+        run: |
+          git fetch origin release:release &>/dev/null || true
+          if git rev-parse --verify "release" &>/dev/null; then echo "::set-env name=HAS_RELEASE_BRANCH::true"; fi
+      - name: Import GPG key
+        if: env.HAS_RELEASE_BRANCH == 'true'
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Set up Maven Central Repository
+        if: env.HAS_RELEASE_BRANCH == 'true'
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Publish package
+        if: env.HAS_RELEASE_BRANCH == 'true'
+        run: mvn -B clean deploy -P release -Dmaven.test.skip=true -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}"
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSH_USER }}
+          MAVEN_PASSWORD: ${{ secrets.OSSH_PASS }}
+      - name: "Remove release branch"
+        run: |
+          git push --delete origin release &>/dev/null || true
