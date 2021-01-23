@@ -3,7 +3,7 @@ package berlin.yuna.natsserver.embedded.annotation;
 import berlin.yuna.clu.logic.SystemUtil;
 import berlin.yuna.natsserver.config.NatsConfig;
 import berlin.yuna.natsserver.embedded.logic.NatsServer;
-import berlin.yuna.natsserver.embedded.model.exception.NatsStreamingStartException;
+import berlin.yuna.natsserver.embedded.model.exception.NatsStartException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
@@ -63,7 +63,7 @@ class EnableNatsServerContextCustomizer implements ContextCustomizer {
             natsServerBean.start(enableNatsServer.timeoutMs());
         } catch (Exception e) {
             natsServerBean.stop(enableNatsServer.timeoutMs());
-            throw new NatsStreamingStartException("Failed to initialise " + EnableNatsServer.class.getSimpleName(), e);
+            throw new NatsStartException("Failed to initialise " + EnableNatsServer.class.getSimpleName(), e);
         }
 
         beanFactory.initializeBean(natsServerBean, BEAN_NAME);
