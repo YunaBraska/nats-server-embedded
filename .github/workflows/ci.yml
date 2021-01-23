@@ -1,0 +1,45 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: JAVA_CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  SPRING_PROFILE: ci
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      #START_TEMPLATE UPDATE_AND_TEST
+      - uses: actions/checkout@v2
+      - name: Set up JDK 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - name: Maven compile and update dependencies
+        run: |
+          ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
+          ./mvnw -B -q clean verify -Dmaven.test.skip=true
+      - name: Run tests
+        run: ./mvnw -B clean verify
+      - name: Publish code coverage
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
+          verbose: false
+      - name: Publish code quality
+        uses: paambaati/codeclimate-action@v2.7.4
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+          JACOCO_SOURCE_PATH: "${{github.workspace}}/src/main/java"
+        with:
+          coverageLocations: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
+      - name: Tag and Push
+        run: .github/scripts/push_changes.sh "https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}"
+      #END_TEMPLATE UPDATE_AND_TEST
