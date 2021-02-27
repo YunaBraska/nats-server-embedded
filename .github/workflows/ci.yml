@@ -28,11 +28,6 @@ jobs:
           ./mvnw -B -q clean verify -Dmaven.test.skip=true
       - name: Run tests
         run: ./mvnw -B clean verify
-      - name: Publish code coverage
-        uses: codecov/codecov-action@v1
-        with:
-          fail_ci_if_error: true
-          verbose: false
       - name: Publish code quality
         uses: paambaati/codeclimate-action@v2.7.4
         env:

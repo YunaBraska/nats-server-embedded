@@ -39,9 +39,34 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 [gitter_shield]: https://img.shields.io/gitter/room/YunaBraska/nats-server-embedded?style=flat-square
 [gitter_link]: https://gitter.im/nats-server-embedded/Lobby
 
+### Family
+
+* Nats plain Java
+    * [Nats-Server](https://github.com/YunaBraska/nats-server)
+    * [Nats-Streaming-Server](https://github.com/YunaBraska/nats-streaming-server)
+* Nats for spring boot
+    * [Nats-Server-Embedded](https://github.com/YunaBraska/nats-server-embedded)
+    * [Nats-Streaming-Server-Embedded](https://github.com/YunaBraska/nats-streaming-server-embedded)
+
 ### Usage
+
+```xml
+
+<dependency>
+  <groupId>berlin.yuna</groupId>
+  <artifactId>nats-server-embedded</artifactId>
+  <version>0.1.7</version>
+</dependency>
+```
+
+[Get latest version][central_link]
+
+### Example
+
 * One annotation to set up the powerful [Nats server](https://github.com/nats-io/nats-server)
+
 ```java
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @EnableNatsServer(port = 4222, natsServerConfig = {"user:admin", "pass:admin"})
@@ -49,9 +74,13 @@ public class SomeTest {
     [...]
 }
 ```
-* See [NatsConfig](https://github.com/YunaBraska/nats-server/blob/master/src/main/java/berlin/yuna/natsserver/config/NatsConfig.java) class for available properties
+
+*
+See [NatsConfig](https://github.com/YunaBraska/nats-server/blob/master/src/main/java/berlin/yuna/natsserver/config/NatsConfig.java)
+class for available properties
 * @EnableNatsServer is also reading spring config
 * @EnableNatsServer parameters are overwriting the spring properties
+
 ```yaml
 nats:
   server:
@@ -62,7 +91,10 @@ nats:
 nats.server.hb_fail_count=3
 ```
 
-* See [NatsSourceConfig](https://github.com/YunaBraska/nats-server/blob/master/src/main/java/berlin/yuna/natsserver/config/NatsSourceConfig.java) class for optional available nats version configuration
+*
+See [NatsSourceConfig](https://github.com/YunaBraska/nats-server/blob/master/src/main/java/berlin/yuna/natsserver/config/NatsSourceConfig.java)
+class for optional available nats version configuration
+
 ```yaml
 nats:
   source:
