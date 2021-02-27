@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextCustomizer;
 import org.springframework.test.context.MergedContextConfiguration;
 import org.springframework.util.Assert;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import static berlin.yuna.natsserver.config.NatsConfig.PORT;
@@ -53,11 +53,11 @@ class EnableNatsServerContextCustomizer implements ContextCustomizer {
         }
 
         final NatsServer natsServerBean = new NatsServer(enableNatsServer.timeoutMs());
-        natsServerBean.setConfig(enableNatsServer.config());
+        natsServerBean.config(enableNatsServer.config());
         natsServerBean.port(overwritePort(natsServerBean));
         String sourceUrl = overwriteSourceUrl(environment, natsServerBean.source());
         natsServerBean.source(!hasText(sourceUrl) ? natsServerBean.source() : sourceUrl);
-        natsServerBean.setConfig(mergeConfig(environment, natsServerBean.getConfig()));
+        natsServerBean.config(mergeConfig(environment, natsServerBean.config()));
 
         try {
             natsServerBean.start(enableNatsServer.timeoutMs());
@@ -83,12 +83,12 @@ class EnableNatsServerContextCustomizer implements ContextCustomizer {
     }
 
     private Map<NatsConfig, String> mergeConfig(final ConfigurableEnvironment environment, final Map<NatsConfig, String> originalConfig) {
-        Map<NatsConfig, String> mergedConfig = new HashMap<>(originalConfig);
+        Map<NatsConfig, String> mergedConfig = new EnumMap<>(originalConfig);
         for (NatsConfig NatsConfig : NatsConfig.values()) {
             String key = "nats.server." + NatsConfig.name().toLowerCase();
             String value = environment.getProperty(key);
-            if (hasText(value) && !mergedConfig.containsKey(NatsConfig)) {
-                mergedConfig.put(NatsConfig, value);
+            if (hasText(value)) {
+                mergedConfig.putIfAbsent(NatsConfig, value);
             }
         }
         return mergedConfig;
