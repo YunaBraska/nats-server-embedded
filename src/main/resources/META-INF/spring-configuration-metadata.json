@@ -10,6 +10,11 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsSourceConfig"
   } ],
   "properties" : [ {
+    "name" : "nats.server.name",
+    "type" : "java.lang.String",
+    "description" : "Server name (default: auto)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
     "name" : "nats.server.signal",
     "type" : "java.lang.String",
     "description" : "[SIGNAL] Send signal to nats-server process (stop, quit, reopen)",
@@ -23,6 +28,11 @@
     "name" : "nats.server.client_advertise",
     "type" : "java.lang.String",
     "description" : "Client URL to advertise to other servers",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.cluster_name",
+    "type" : "java.lang.String",
+    "description" : "Cluster Name, if not set one will be dynamically generated",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.no_advertise",
@@ -95,6 +105,16 @@
     "name" : "nats.server.remote_syslog",
     "type" : "java.lang.String",
     "description" : "Syslog server addr (udp://localhost:514)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.jetstream",
+    "type" : "java.lang.String",
+    "description" : "Enable JetStream functionality",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.store_dir",
+    "type" : "java.lang.String",
+    "description" : "Set the storage directory",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.user",
