@@ -1,3 +1,0 @@
-nats:
-  source:
-    default: ${NATS_SOURCE:file://${user.dir}/src/test/resources/natsserver/mac.zip}

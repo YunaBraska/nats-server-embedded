@@ -3,6 +3,3 @@ logging:
     ROOT: ERROR
     org.springframework: ERROR
     logging.level.yuna.berlin: ERROR
-nats:
-  source:
-    default: ${NATS_SOURCE:file://${user.dir}/src/test/resources/natsserver/linux.zip}

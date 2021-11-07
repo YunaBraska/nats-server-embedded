@@ -72,7 +72,7 @@ class EnableNatsServerContextCustomizer implements ContextCustomizer {
     }
 
     private String overwriteSourceUrl(final ConfigurableEnvironment environment, final String fallback) {
-        return environment.getProperty("nats.source.default", environment.getProperty("nats.source." + SystemUtil.getOsType().toString().toLowerCase(), fallback));
+        return environment.getProperty("nats.source.default", environment.getProperty("nats.source.url", fallback));
     }
 
     private int overwritePort(final NatsServer natsServerBean) {

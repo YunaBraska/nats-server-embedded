@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
 
-import static berlin.yuna.clu.logic.SystemUtil.getOsType;
+import static berlin.yuna.clu.logic.SystemUtil.OS;
+import static berlin.yuna.clu.logic.SystemUtil.OS_ARCH;
+import static berlin.yuna.clu.logic.SystemUtil.OS_ARCH_TYPE;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,7 +32,7 @@ class NatsServerComponentTest {
     @Test
     @DisplayName("Download and start server")
     void natsServer_shouldDownloadUnzipAndStart() throws IOException {
-        Files.deleteIfExists(natsServer.getNatsServerPath(getOsType()));
+        Files.deleteIfExists(natsServer.getNatsServerPath(OS, OS_ARCH, OS_ARCH_TYPE));
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4222));
     }
@@ -61,7 +63,7 @@ class NatsServerComponentTest {
     @DisplayName("ToString")
     void toString_shouldPrintPortAndOs() {
         String runningNatsServer = natsServer.toString();
-        assertThat(runningNatsServer, containsString(getOsType().toString()));
+        assertThat(runningNatsServer, containsString(OS.toString()));
         assertThat(runningNatsServer, containsString("4222"));
     }
 

@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import static berlin.yuna.clu.logic.SystemUtil.OS;
+import static berlin.yuna.clu.logic.SystemUtil.OS_ARCH;
+import static berlin.yuna.clu.logic.SystemUtil.OS_ARCH_TYPE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,7 +36,7 @@ class ConfigMetadataIntegrationTest {
         for (NatsSourceConfig config : NatsSourceConfig.values()) {
             String name = config.name().toLowerCase();
             String desc = config.getDescription();
-            metadata.newProperties().name(groups, name).description(parseDesc(desc)).type(parseType(desc)).defaultValue(config.getDefaultValue());
+            metadata.newProperties().name(groups, name).description(parseDesc(desc)).type(parseType(desc)).defaultValue(config.getDefaultValue(OS, OS_ARCH, OS_ARCH_TYPE));
         }
 
         Path generated = metadata.generate();

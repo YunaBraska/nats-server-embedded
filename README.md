@@ -55,7 +55,7 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 <dependency>
   <groupId>berlin.yuna</groupId>
   <artifactId>nats-server-embedded</artifactId>
-  <version>0.1.7</version>
+  <version>2.2.44</version>
 </dependency>
 ```
 
@@ -98,11 +98,7 @@ class for optional available nats version configuration
 ```yaml
 nats:
   source:
-    mac: "https://nats-mac.zip"
-    linux: "https://nats-linux.zip"
-    solaris: "https://nats-solaris.zip"
-    windows: "https://nats-windows.zip"
-    default: "file://${user.dir}/nats-foo-bar.zip"
+    url: "https://nats-mac.zip"
 ```
 
 ```

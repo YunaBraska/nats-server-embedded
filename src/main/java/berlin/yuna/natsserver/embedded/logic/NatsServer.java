@@ -1,6 +1,9 @@
 package berlin.yuna.natsserver.embedded.logic;
 
 import berlin.yuna.clu.logic.SystemUtil;
+import berlin.yuna.clu.model.OsArch;
+import berlin.yuna.clu.model.OsArchType;
+import berlin.yuna.clu.model.OsType;
 import berlin.yuna.natsserver.config.NatsSourceConfig;
 import berlin.yuna.natsserver.logic.Nats;
 import org.springframework.beans.factory.DisposableBean;
@@ -17,7 +20,7 @@ public class NatsServer extends Nats implements DisposableBean {
     private final long timeoutMs;
 
     /**
-     * Create custom {@link NatsServer} with simplest configuration {@link NatsServer#setConfig(String...)}
+     * Create custom {@link NatsServer} with simplest configuration {@link NatsServer#config(String...)}
      *
      * @param timeoutMs        tear down timeout
      * @param natsServerConfig passes the original parameters to the server. example: port:4222, user:admin, password:admin
@@ -59,8 +62,12 @@ public class NatsServer extends Nats implements DisposableBean {
         return this;
     }
 
-    protected Path getNatsServerPath(SystemUtil.OperatingSystem operatingSystem) {
-        return super.getNatsServerPath(operatingSystem);
+    protected Path getDefaultPath() {
+        return super.getDefaultPath();
+    }
+
+    protected Path getNatsServerPath(final OsType os, final OsArch arch, final OsArchType archType) {
+        return super.getNatsServerPath(os, arch, archType);
     }
 
     /**

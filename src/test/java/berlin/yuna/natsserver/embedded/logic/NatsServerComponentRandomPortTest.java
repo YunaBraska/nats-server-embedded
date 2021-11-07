@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static berlin.yuna.clu.logic.SystemUtil.getOsType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,7 +28,7 @@ class NatsServerComponentRandomPortTest {
     @Test
     @DisplayName("Download and start server")
     void natsServer_shouldDownloadUnzipAndStart() throws IOException {
-        Files.deleteIfExists(natsServer.getNatsServerPath(getOsType()));
+        Files.deleteIfExists(natsServer.getDefaultPath());
         assertThat(natsServer, is(notNullValue()));
         System.out.println("Port: " + natsServer.port());
         assertThat(natsServer.port(), is(greaterThan(4222)));
