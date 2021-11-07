@@ -171,6 +171,6 @@
     "type" : "java.lang.String",
     "description" : "DEFAULT SOURCE URL",
     "sourceType" : "berlin.yuna.natsserver.config.NatsSourceConfig",
-    "defaultValue" : "https://github.com/nats-io/nats-server/releases/download/v2.6.4/nats-server-v2.6.4-darwin-arm64.zip"
+    "defaultValue" : "https://github.com/nats-io/nats-server/releases/download/v2.6.4/nats-server-v2.6.4-linux-amd64.zip"
   } ]
 }
