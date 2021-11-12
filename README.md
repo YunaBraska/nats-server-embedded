@@ -21,11 +21,11 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 [coverage_shield]: https://img.shields.io/codeclimate/coverage/YunaBraska/nats-server-embedded?style=flat-square
 [coverage_link]: https://codeclimate.com/github/YunaBraska/nats-server-embedded/test_coverage
 [issues_shield]: https://img.shields.io/github/issues/YunaBraska/nats-server-embedded?style=flat-square
-[issues_link]: https://github.com/YunaBraska/nats-server-embedded/commits/master
+[issues_link]: https://github.com/YunaBraska/nats-server-embedded/commits/main
 [commit_shield]: https://img.shields.io/github/last-commit/YunaBraska/nats-server-embedded?style=flat-square
 [commit_link]: https://github.com/YunaBraska/nats-server-embedded/issues
 [license_shield]: https://img.shields.io/github/license/YunaBraska/nats-server-embedded?style=flat-square
-[license_link]: https://github.com/YunaBraska/nats-server-embedded/blob/master/LICENSE
+[license_link]: https://github.com/YunaBraska/nats-server-embedded/blob/main/LICENSE
 [dependency_shield]: https://img.shields.io/librariesio/github/YunaBraska/nats-server-embedded?style=flat-square
 [dependency_link]: https://libraries.io/github/YunaBraska/nats-server-embedded
 [central_shield]: https://img.shields.io/maven-central/v/berlin.yuna/nats-server-embedded?style=flat-square
@@ -76,7 +76,7 @@ public class SomeTest {
 ```
 
 *
-See [NatsConfig](https://github.com/YunaBraska/nats-server/blob/master/src/main/java/berlin/yuna/natsserver/config/NatsConfig.java)
+See [NatsConfig](https://github.com/YunaBraska/nats-server/blob/main/src/main/java/berlin/yuna/natsserver/config/NatsConfig.java)
 class for available properties
 * @EnableNatsServer is also reading spring config
 * @EnableNatsServer parameters are overwriting the spring properties
@@ -92,7 +92,7 @@ nats.server.hb_fail_count=3
 ```
 
 *
-See [NatsSourceConfig](https://github.com/YunaBraska/nats-server/blob/master/src/main/java/berlin/yuna/natsserver/config/NatsSourceConfig.java)
+See [NatsSourceConfig](https://github.com/YunaBraska/nats-server/blob/main/src/main/java/berlin/yuna/natsserver/config/NatsSourceConfig.java)
 class for optional available nats version configuration
 
 ```yaml

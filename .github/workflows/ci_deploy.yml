@@ -5,9 +5,9 @@ name: JAVA_CI_DAILY
 
 on:
   workflow_dispatch:
-    branches: [ master ]
+    branches: [ main ]
   deployment:
-    branches: [ master ]
+    branches: [ main ]
   schedule:
     - cron: '0 4 * * *'
 
