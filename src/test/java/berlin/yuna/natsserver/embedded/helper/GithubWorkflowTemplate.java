@@ -86,7 +86,7 @@ class GithubWorkflowTemplate {
 
     private void readLines(final Path file, final Consumer<String> consumer) {
         try {
-            Scanner scanner = new Scanner(file, UTF_8.name()).useDelimiter("(?<=\n)|(?!\n)(?<=\r)");
+            final Scanner scanner = new Scanner(file, UTF_8.name()).useDelimiter("(?<=\n)|(?!\n)(?<=\r)");
             while (scanner.hasNext()) {
                 final String line = scanner.next();
                 if (line != null) {

@@ -38,7 +38,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface EnableNatsServer {
 
     /**
-     * Passes port number to {@link NatsServer#setConfig(String...)}
+     * Sets nats port
+     * -1 means random port
      */
     int port() default 4222;
 
@@ -48,12 +49,22 @@ public @interface EnableNatsServer {
     long timeoutMs() default 10000;
 
     /**
-     * Random port
+     * Config file
      */
-    boolean randomPort() default false;
+    String configFile() default "";
 
     /**
-     * Passes the original parameters to {@link NatsServer#setConfig(String...)} for startup
+     * Custom download URL
+     */
+    String downloadUrl() default "";
+
+    /**
+     * File to nats server binary so no download will be needed
+     */
+    String binaryFile() default "";
+
+    /**
+     * Passes the original parameters to {@link NatsServer#config(String...)} for startup
      * {@link berlin.yuna.natsserver.config.NatsConfig}
      */
     String[] config() default {};

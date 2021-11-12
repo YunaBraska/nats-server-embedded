@@ -41,10 +41,10 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 
 ### Family
 
-* Nats plain Java
+* Nats **plain Java**
     * [Nats-Server](https://github.com/YunaBraska/nats-server)
     * [Nats-Streaming-Server](https://github.com/YunaBraska/nats-streaming-server)
-* Nats for spring boot
+* Nats for **Spring Boot**
     * [Nats-Server-Embedded](https://github.com/YunaBraska/nats-server-embedded)
     * [Nats-Streaming-Server-Embedded](https://github.com/YunaBraska/nats-streaming-server-embedded)
 
@@ -55,7 +55,7 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 <dependency>
   <groupId>berlin.yuna</groupId>
   <artifactId>nats-server-embedded</artifactId>
-  <version>2.2.44</version>
+  <version>2.2.45</version>
 </dependency>
 ```
 
@@ -69,7 +69,7 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@EnableNatsServer(port = 4222, natsServerConfig = {"user:admin", "pass:admin"})
+@EnableNatsServer(port = 4222, config = {"user", "admin", "pass", "admin"})
 public class SomeTest {
     [...]
 }
