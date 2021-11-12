@@ -5,9 +5,9 @@ name: JAVA_CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 env:
   SPRING_PROFILE: ci
@@ -24,6 +24,7 @@ jobs:
           java-version: 8
       - name: Maven compile and update dependencies
         run: |
+          ./mvnw -N io.takari:maven:wrapper
           ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
           ./mvnw -B -q clean verify -Dmaven.test.skip=true
       - name: Run tests

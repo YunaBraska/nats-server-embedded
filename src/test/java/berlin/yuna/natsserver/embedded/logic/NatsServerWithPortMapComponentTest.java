@@ -1,6 +1,7 @@
 package berlin.yuna.natsserver.embedded.logic;
 
 import berlin.yuna.natsserver.embedded.annotation.EnableNatsServer;
+import berlin.yuna.natsserver.logic.NatsUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,11 @@ import java.net.Socket;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 @SpringBootTest
 @Tag("IntegrationTest")
-@EnableNatsServer(config = "port:4235")
+@EnableNatsServer(port = 4227 ,config = {"port", "4235"})
 @DisplayName("NatsServer AutoConfig port from map test")
 class NatsServerWithPortMapComponentTest {
 
@@ -26,9 +28,10 @@ class NatsServerWithPortMapComponentTest {
     @Test
     @DisplayName("Overwrite port on config map")
     void natsServer_withCustomPortInMap_shouldStartWithCustomPort() throws IOException {
-        new Socket("localhost", 4235).close();
+        NatsUtils.waitForPort(4235, 5000, false);
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4235));
+        assertThat(natsServer.pid(), is(greaterThan(-1)));
         natsServer.stop();
     }
 }

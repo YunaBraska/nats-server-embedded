@@ -4,10 +4,6 @@
     "name" : "nats.server",
     "type" : "berlin.yuna.natsserver.config.NatsConfig",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.source",
-    "type" : "berlin.yuna.natsserver.config.NatsSourceConfig",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsSourceConfig"
   } ],
   "properties" : [ {
     "name" : "nats.server.name",
@@ -167,10 +163,42 @@
     "description" : "Cluster URL for solicited routes",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
-    "name" : "nats.source.url",
+    "name" : "nats.server.nats_system",
     "type" : "java.lang.String",
-    "description" : "DEFAULT SOURCE URL",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsSourceConfig",
-    "defaultValue" : "https://github.com/nats-io/nats-server/releases/download/v2.6.4/nats-server-v2.6.4-linux-amd64.zip"
+    "description" : "suffix for binary path",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.nats_log_name",
+    "type" : "java.lang.String",
+    "description" : "java wrapper name",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : "Nats"
+  }, {
+    "name" : "nats.server.nats_version",
+    "type" : "java.lang.String",
+    "description" : "Overwrites Nats server version on path",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : "v2.6.4"
+  }, {
+    "name" : "nats.server.nats_download_url",
+    "type" : "java.lang.String",
+    "description" : "Path to Nats binary or zip file",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : "https://github.com/nats-io/nats-server/releases/download/%NATS_VERSION%/nats-server-%NATS_VERSION%-%NATS_SYSTEM%.zip"
+  }, {
+    "name" : "nats.server.nats_binary_path",
+    "type" : "java.lang.String",
+    "description" : "Target Path to Nats binary or zip file - auto from NATS_DOWNLOAD_URL",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.nats_config_file",
+    "type" : "java.lang.String",
+    "description" : "Additional property file with config value",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.nats_args",
+    "type" : "java.lang.String",
+    "description" : "custom arguments separated by \\, or just space",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   } ]
 }

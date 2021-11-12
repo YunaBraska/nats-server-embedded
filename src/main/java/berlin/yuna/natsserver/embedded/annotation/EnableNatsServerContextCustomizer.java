@@ -1,6 +1,5 @@
 package berlin.yuna.natsserver.embedded.annotation;
 
-import berlin.yuna.clu.logic.SystemUtil;
 import berlin.yuna.natsserver.config.NatsConfig;
 import berlin.yuna.natsserver.embedded.logic.NatsServer;
 import berlin.yuna.natsserver.embedded.model.exception.NatsStartException;
@@ -13,9 +12,11 @@ import org.springframework.test.context.ContextCustomizer;
 import org.springframework.test.context.MergedContextConfiguration;
 import org.springframework.util.Assert;
 
-import java.util.EnumMap;
 import java.util.Map;
 
+import static berlin.yuna.natsserver.config.NatsConfig.NATS_BINARY_PATH;
+import static berlin.yuna.natsserver.config.NatsConfig.NATS_CONFIG_FILE;
+import static berlin.yuna.natsserver.config.NatsConfig.NATS_DOWNLOAD_URL;
 import static berlin.yuna.natsserver.config.NatsConfig.PORT;
 import static berlin.yuna.natsserver.embedded.logic.NatsServer.BEAN_NAME;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -43,54 +44,51 @@ class EnableNatsServerContextCustomizer implements ContextCustomizer {
      */
     @Override
     public void customizeContext(final ConfigurableApplicationContext context, final MergedContextConfiguration mergedConfig) {
-        ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+        final ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
         Assert.isInstanceOf(DefaultSingletonBeanRegistry.class, beanFactory);
-        ConfigurableEnvironment environment = context.getEnvironment();
+        final ConfigurableEnvironment environment = context.getEnvironment();
 
         if (enableNatsServer == null) {
             LOG.debug("Skipping [{}] cause its not defined", EnableNatsServer.class.getSimpleName());
             return;
         }
 
-        final NatsServer natsServerBean = new NatsServer(enableNatsServer.timeoutMs());
-        natsServerBean.config(enableNatsServer.config());
-        natsServerBean.port(overwritePort(natsServerBean));
-        String sourceUrl = overwriteSourceUrl(environment, natsServerBean.source());
-        natsServerBean.source(!hasText(sourceUrl) ? natsServerBean.source() : sourceUrl);
-        natsServerBean.config(mergeConfig(environment, natsServerBean.config()));
+        final NatsServer natsServer = new NatsServer(enableNatsServer.timeoutMs());
+        setEnvConfig(natsServer, environment);
+        if (enableNatsServer.port() != natsServer.port()) {
+            natsServer.config(PORT, String.valueOf(enableNatsServer.port()));
+        }
+        natsServer.config(enableNatsServer.config());
+        configure(natsServer, NATS_CONFIG_FILE, enableNatsServer.configFile());
+        configure(natsServer, NATS_BINARY_PATH, enableNatsServer.binaryFile());
+        configure(natsServer, NATS_DOWNLOAD_URL, enableNatsServer.downloadUrl());
 
         try {
-            natsServerBean.start(enableNatsServer.timeoutMs());
+            natsServer.start(enableNatsServer.timeoutMs());
         } catch (Exception e) {
-            natsServerBean.stop(enableNatsServer.timeoutMs());
+            natsServer.stop(enableNatsServer.timeoutMs());
             throw new NatsStartException("Failed to initialise " + EnableNatsServer.class.getSimpleName(), e);
         }
 
-        beanFactory.initializeBean(natsServerBean, BEAN_NAME);
-        beanFactory.registerSingleton(BEAN_NAME, natsServerBean);
-        ((DefaultSingletonBeanRegistry) beanFactory).registerDisposableBean(BEAN_NAME, natsServerBean);
+        beanFactory.initializeBean(natsServer, BEAN_NAME);
+        beanFactory.registerSingleton(BEAN_NAME, natsServer);
+        ((DefaultSingletonBeanRegistry) beanFactory).registerDisposableBean(BEAN_NAME, natsServer);
+
     }
 
-    private String overwriteSourceUrl(final ConfigurableEnvironment environment, final String fallback) {
-        return environment.getProperty("nats.source.default", environment.getProperty("nats.source.url", fallback));
-    }
-
-    private int overwritePort(final NatsServer natsServerBean) {
-        if (enableNatsServer.randomPort()) {
-            return -1;
+    private void configure(final NatsServer natsServerBean, final NatsConfig key, final String value) {
+        if (hasText(value)) {
+            natsServerBean.config(key, value);
         }
-        return enableNatsServer.port() > 0 && enableNatsServer.port() != (Integer) PORT.getDefaultValue() ? enableNatsServer.port() : natsServerBean.port();
     }
 
-    private Map<NatsConfig, String> mergeConfig(final ConfigurableEnvironment environment, final Map<NatsConfig, String> originalConfig) {
-        Map<NatsConfig, String> mergedConfig = new EnumMap<>(originalConfig);
+    private void setEnvConfig(final NatsServer natsServer, final ConfigurableEnvironment environment) {
         for (NatsConfig NatsConfig : NatsConfig.values()) {
-            String key = "nats.server." + NatsConfig.name().toLowerCase();
-            String value = environment.getProperty(key);
+            final String key = "nats.server." + NatsConfig.name().toLowerCase();
+            final String value = environment.getProperty(key);
             if (hasText(value)) {
-                mergedConfig.putIfAbsent(NatsConfig, value);
+                natsServer.config(NatsConfig, value);
             }
         }
-        return mergedConfig;
     }
 }
