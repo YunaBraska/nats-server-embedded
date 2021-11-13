@@ -1,6 +1,5 @@
 package berlin.yuna.natsserver.embedded.logic;
 
-import berlin.yuna.natsserver.config.NatsConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

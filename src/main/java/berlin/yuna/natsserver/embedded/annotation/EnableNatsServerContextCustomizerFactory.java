@@ -15,8 +15,8 @@ class EnableNatsServerContextCustomizerFactory implements ContextCustomizerFacto
      * @return {@link EnableNatsServerContextCustomizer}
      */
     @Override
-    public ContextCustomizer createContextCustomizer(Class<?> testClass, List<ContextConfigurationAttributes> configAttributes) {
-        EnableNatsServer enableNatsServer = AnnotatedElementUtils.findMergedAnnotation(testClass, EnableNatsServer.class);
+    public ContextCustomizer createContextCustomizer(final Class<?> testClass, final List<ContextConfigurationAttributes> configAttributes) {
+        final EnableNatsServer enableNatsServer = AnnotatedElementUtils.findMergedAnnotation(testClass, EnableNatsServer.class);
         return new EnableNatsServerContextCustomizer(enableNatsServer);
     }
 
