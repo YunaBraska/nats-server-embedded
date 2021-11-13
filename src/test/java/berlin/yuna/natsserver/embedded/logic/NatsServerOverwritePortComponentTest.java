@@ -26,7 +26,7 @@ class NatsServerOverwritePortComponentTest {
 
     @Test
     @DisplayName("Custom port overwritten by map")
-    void natsServer_customPorts_shouldOverwritePortMap() throws IOException {
+    void natsServer_customPorts_shouldOverwritePortMap() {
         NatsUtils.waitForPort(4246, 5000, false);
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4246));

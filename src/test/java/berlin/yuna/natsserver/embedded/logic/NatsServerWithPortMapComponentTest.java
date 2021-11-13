@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
-import java.net.Socket;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -27,7 +26,7 @@ class NatsServerWithPortMapComponentTest {
 
     @Test
     @DisplayName("Overwrite port on config map")
-    void natsServer_withCustomPortInMap_shouldStartWithCustomPort() throws IOException {
+    void natsServer_withCustomPortInMap_shouldStartWithCustomPort() {
         NatsUtils.waitForPort(4235, 5000, false);
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4235));

@@ -55,7 +55,7 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 <dependency>
   <groupId>berlin.yuna</groupId>
   <artifactId>nats-server-embedded</artifactId>
-  <version>2.2.45</version>
+  <version>2.2.49</version>
 </dependency>
 ```
 
@@ -94,12 +94,6 @@ nats.server.hb_fail_count=3
 *
 See [NatsSourceConfig](https://github.com/YunaBraska/nats-server/blob/main/src/main/java/berlin/yuna/natsserver/config/NatsSourceConfig.java)
 class for optional available nats version configuration
-
-```yaml
-nats:
-  source:
-    url: "https://nats-mac.zip"
-```
 
 ```
                                                              .,,.                                                             

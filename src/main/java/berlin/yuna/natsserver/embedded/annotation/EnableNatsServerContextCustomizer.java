@@ -81,11 +81,11 @@ class EnableNatsServerContextCustomizer implements ContextCustomizer {
     }
 
     private void setEnvConfig(final NatsServer natsServer, final ConfigurableEnvironment environment) {
-        for (NatsConfig NatsConfig : NatsConfig.values()) {
-            final String key = "nats.server." + NatsConfig.name().toLowerCase();
+        for (NatsConfig natsConfig : NatsConfig.values()) {
+            final String key = "nats.server." + natsConfig.name().toLowerCase();
             final String value = environment.getProperty(key);
             if (hasText(value)) {
-                natsServer.config(NatsConfig, value);
+                natsServer.config(natsConfig, value);
             }
         }
     }
