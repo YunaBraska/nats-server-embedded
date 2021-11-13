@@ -12,7 +12,7 @@ public class NatsServer extends Nats implements DisposableBean {
     private final long timeoutMs;
 
     /**
-     * Create {@link NatsServer} with simplest start able configuration
+     * Create {@link NatsServer} with the simplest start able configuration
      *
      * @param timeoutMs tear down timeout
      */
