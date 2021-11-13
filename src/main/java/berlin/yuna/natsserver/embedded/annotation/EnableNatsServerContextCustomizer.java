@@ -12,8 +12,6 @@ import org.springframework.test.context.ContextCustomizer;
 import org.springframework.test.context.MergedContextConfiguration;
 import org.springframework.util.Assert;
 
-import java.util.Map;
-
 import static berlin.yuna.natsserver.config.NatsConfig.NATS_BINARY_PATH;
 import static berlin.yuna.natsserver.config.NatsConfig.NATS_CONFIG_FILE;
 import static berlin.yuna.natsserver.config.NatsConfig.NATS_DOWNLOAD_URL;
