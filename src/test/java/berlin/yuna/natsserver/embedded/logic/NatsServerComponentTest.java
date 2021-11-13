@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
 
-import static berlin.yuna.clu.logic.SystemUtil.OS;
-import static berlin.yuna.clu.logic.SystemUtil.OS_ARCH;
-import static berlin.yuna.clu.logic.SystemUtil.OS_ARCH_TYPE;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
