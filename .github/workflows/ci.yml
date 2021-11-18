@@ -1,22 +1,17 @@
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
+# Ansible managed
 name: JAVA_CI
-
 on:
+  workflow_dispatch:
+    branches: ['main']
   push:
-    branches: [ main ]
+    branches: ['main']
   pull_request:
-    branches: [ main ]
-
-env:
-  SPRING_PROFILE: ci
+    branches: ['main']
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      #START_TEMPLATE UPDATE_AND_TEST
       - uses: actions/checkout@v2
       - name: Set up JDK 8
         uses: actions/setup-java@v1
@@ -24,7 +19,7 @@ jobs:
           java-version: 8
       - name: Maven compile and update dependencies
         run: |
-          ./mvnw -N io.takari:maven:wrapper
+          ./mvnw -B -N io.takari:maven:wrapper
           ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
           ./mvnw -B -q clean verify -Dmaven.test.skip=true
       - name: Run tests
@@ -37,5 +32,9 @@ jobs:
         with:
           coverageLocations: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
       - name: Tag and Push
-        run: .github/scripts/push_changes.sh "https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}"
-      #END_TEMPLATE UPDATE_AND_TEST
+        run: |
+          wget -nc https://raw.githubusercontent.com/YunaBraska/YunaBraska/main/.github/scripts/versions.sh -P .github/scripts
+          wget -nc https://raw.githubusercontent.com/YunaBraska/YunaBraska/main/.github/scripts/push_changes.sh -P .github/scripts
+          wget -nc https://raw.githubusercontent.com/YunaBraska/YunaBraska/main/.github/scripts/increment_version.sh -P .github/scripts
+          chmod +x .github/scripts/versions.sh .github/scripts/push_changes.sh .github/scripts/increment_version.sh
+          .github/scripts/push_changes.sh "https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}"
