@@ -75,3 +75,28 @@ jobs:
       - name: "Remove release branch"
         run: |
           git push --delete origin release &>/dev/null || true
+      - name: "[Release] Get latest tag"
+        id: latest_tag
+        run: |
+          git fetch --all --tags
+          echo "::set-output name=name::$(git tag --sort=-creatordate | head -1)"
+      - name: "[Release] Get second latest tag"
+        id: second_latest_tag
+        run: |
+          git fetch --all --tags
+          echo "::set-output name=name::$(git tag --sort=-creatordate | head -2 | tail -1)"
+      - name: "[Release] Get changelog"
+        id: changelog
+        run: |
+          mkdir -p target
+          git log --pretty=format:'- %s%n' ${{ steps.second_latest_tag.outputs.name }}..${{ steps.latest_tag.outputs.name }} > target/release.log
+          echo "::set-output name=changelog::$(echo $(git log --pretty=format:'- %s\n' ${{ steps.second_latest_tag.outputs.name }}..${{ steps.latest_tag.outputs.name }}))"
+      - name: "[Release] create"
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.latest_tag.outputs.name }}
+          artifacts: "target/*.jar,build/*.jar"
+          generateReleaseNotes: true
+          bodyFile: target/release.log
+          token: ${{ secrets.GITHUB_TOKEN }}
