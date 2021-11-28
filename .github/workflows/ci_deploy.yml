@@ -72,9 +72,6 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.OSSH_USER }}
           MAVEN_PASSWORD: ${{ secrets.OSSH_PASS }}
-      - name: "Remove release branch"
-        run: |
-          git push --delete origin release &>/dev/null || true
       - name: "[Release] Get latest tag"
         id: latest_tag
         run: |
@@ -92,6 +89,7 @@ jobs:
           git log --pretty=format:'- %s%n' ${{ steps.second_latest_tag.outputs.name }}..${{ steps.latest_tag.outputs.name }} > target/release.log
           echo "::set-output name=changelog::$(echo $(git log --pretty=format:'- %s\n' ${{ steps.second_latest_tag.outputs.name }}..${{ steps.latest_tag.outputs.name }}))"
       - name: "[Release] create"
+        if: env.HAS_RELEASE_BRANCH == 'true'
         id: create_release
         uses: ncipollo/release-action@v1
         with:
@@ -100,3 +98,6 @@ jobs:
           generateReleaseNotes: true
           bodyFile: target/release.log
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Remove release branch"
+        run: |
+          git push --delete origin release &>/dev/null || true
