@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     branches: ['main']
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 9 * * *"
 
 env:
   SPRING_PROFILE: ci
