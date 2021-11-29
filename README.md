@@ -1,5 +1,5 @@
 # nats-server-embedded
-A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server) which contains the original [Nats server](https://github.com/nats-io/nats-server)
+Nats Server for testing which contains the original [Nats server](https://github.com/nats-io/nats-server)
 
 [![Build][build_shield]][build_link]
 [![Maintainable][maintainable_shield]][maintainable_link]
@@ -42,11 +42,13 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 ### Family
 
 * Nats **plain Java**
-    * [Nats-Server](https://github.com/YunaBraska/nats-server)
-    * [Nats-Streaming-Server](https://github.com/YunaBraska/nats-streaming-server)
+  * [Nats-Server](https://github.com/YunaBraska/nats-server)
+  * [Nats-Streaming-Server](https://github.com/YunaBraska/nats-streaming-server)
+* Nats for **JUnit**
+  * [Nats-Server-JUnit](https://github.com/YunaBraska/nats-server-junit)
 * Nats for **Spring Boot**
-    * [Nats-Server-Embedded](https://github.com/YunaBraska/nats-server-embedded)
-    * [Nats-Streaming-Server-Embedded](https://github.com/YunaBraska/nats-streaming-server-embedded)
+  * [Nats-Server-Embedded](https://github.com/YunaBraska/nats-server-embedded)
+  * [Nats-Streaming-Server-Embedded](https://github.com/YunaBraska/nats-streaming-server-embedded)
 
 ### Usage
 
@@ -55,7 +57,7 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 <dependency>
   <groupId>berlin.yuna</groupId>
   <artifactId>nats-server-embedded</artifactId>
-  <version>2.2.49</version>
+  <version>2.2.56</version>
 </dependency>
 ```
 
@@ -63,7 +65,7 @@ A spring wrapper of [Java-Nats-Server](https://github.com/YunaBraska/nats-server
 
 ### Example
 
-* One annotation to set up the powerful [Nats server](https://github.com/nats-io/nats-server)
+* One annotation to set up the [Nats server](https://github.com/nats-io/nats-server)
 
 ```java
 
@@ -75,8 +77,7 @@ public class SomeTest {
 }
 ```
 
-*
-See [NatsConfig](https://github.com/YunaBraska/nats-server/blob/main/src/main/java/berlin/yuna/natsserver/config/NatsConfig.java)
+* See [NatsConfig](https://github.com/YunaBraska/nats-server/blob/main/src/main/java/berlin/yuna/natsserver/config/NatsConfig.java)
 class for available properties
 * @EnableNatsServer is also reading spring config
 * @EnableNatsServer parameters are overwriting the spring properties
