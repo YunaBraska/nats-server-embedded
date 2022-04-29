@@ -2,7 +2,7 @@
 name: JAVA_CI
 on:
   workflow_dispatch:
-    branches: ['main']
+#    branches: ['main']
   push:
     branches: ['main']
   pull_request:

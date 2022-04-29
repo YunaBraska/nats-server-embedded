@@ -2,9 +2,9 @@
 name: JAVA_CI_DEPLOY
 on:
   workflow_dispatch:
-    branches: ['main']
+#    branches: ['main']
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "0 10 * * *"
 
 env:
   SPRING_PROFILE: ci
