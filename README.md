@@ -1,6 +1,9 @@
 ![logo](src/test/resources/nats-spring.png)
 
 # nats-server-embedded
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=HFHFUT3G6TZF6)
+
 Nats Server for testing which contains the original [Nats server](https://github.com/nats-io/nats-server)
 
 [![Build][build_shield]][build_link]
