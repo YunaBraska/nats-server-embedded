@@ -28,9 +28,11 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
       - name: Maven compile and update dependencies
         run: |
-          ./mvnw -B -N io.takari:maven:wrapper
+          ./mvnw -B -q -N io.takari:maven:wrapper
+          ./mvnw -B -q versions:update-parent -DgenerateBackupPoms=false
           ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
           ./mvnw -B -q clean verify -Dmaven.test.skip=true
+          ./mvnw -B -q dependency:resolve -Dmaven.test.skip=true
           ./mvnw -B -q dependency:resolve-plugins -Dmaven.test.skip=true
       - name: Run tests
         run: ./mvnw -B clean verify
@@ -46,6 +48,7 @@ jobs:
           rm -rf coverage* &>/dev/null || true
           rm -rf codeclimate* &>/dev/null || true
           rm -rf ./*reporter* &>/dev/null || true
+          rm -rf public-key.asc &>/dev/null || true
           git checkout src/test/resources/diagram_example.svg &>/dev/null || true
       - name: Tag and Push
         run: |
