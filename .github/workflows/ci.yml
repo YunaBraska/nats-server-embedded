@@ -31,7 +31,7 @@ jobs:
           ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
           ./mvnw -B -q dependency:resolve -Dmaven.test.skip=true -P=tag,release
           ./mvnw -B -q dependency:resolve-plugins -Dmaven.test.skip=true -P=tag,release
-          ./mvnw -B -q clean verify -Dmaven.test.skip=true -P=tag,release
+          ./mvnw -B -q clean verify -Dmaven.test.skip=true
       - name: Run tests
         run: ./mvnw -B clean verify
       - name: Publish code quality
