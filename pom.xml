@@ -43,7 +43,7 @@
         <!-- VERSIONS -->
         <gson.version>2.9.1</gson.version>
         <spring-boot.version>2.7.3</spring-boot.version>
-        <nats-server.version>2.6.42</nats-server.version>
+        <nats-server.version>2.9.0</nats-server.version>
         <config-metadata-generator.version>0.6.67</config-metadata-generator.version>
         <!-- VERSIONS BUILD -->
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
