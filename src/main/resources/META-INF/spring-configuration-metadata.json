@@ -178,7 +178,7 @@
     "type" : "java.lang.String",
     "description" : "Overwrites Nats server version on path",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
-    "defaultValue" : "v2.9.1"
+    "defaultValue" : "v2.9.2"
   }, {
     "name" : "nats.server.nats_download_url",
     "type" : "java.lang.String",
