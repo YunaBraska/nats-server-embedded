@@ -11,6 +11,11 @@
     "description" : "Server name (default: auto)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
+    "name" : "nats.server.server_name",
+    "type" : "java.lang.String",
+    "description" : "Server name (default: auto)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
     "name" : "nats.server.signal",
     "type" : "java.lang.String",
     "description" : "[SIGNAL] Send signal to nats-server process (stop, quit, reopen)",
@@ -46,7 +51,18 @@
     "description" : "For implicit routes, number of connect retries",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
+    "name" : "nats.server.cluster_listen",
+    "type" : "java.lang.String",
+    "description" : "Cluster url from which members can solicit routes",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
     "name" : "nats.server.addr",
+    "type" : "java.lang.String",
+    "description" : "Bind to host address (default: 0.0.0.0)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : "0.0.0.0"
+  }, {
+    "name" : "nats.server.net",
     "type" : "java.lang.String",
     "description" : "Bind to host address (default: 0.0.0.0)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
@@ -71,6 +87,11 @@
     "name" : "nats.server.config",
     "type" : "java.lang.String",
     "description" : "Configuration file",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.ports_file_dir",
+    "type" : "java.lang.String",
+    "description" : "Creates a ports file in the specified directory (<executable_name>_<pid>.ports)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.log",
@@ -101,6 +122,16 @@
     "name" : "nats.server.remote_syslog",
     "type" : "java.lang.String",
     "description" : "Syslog server addr (udp://localhost:514)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.log_size_limit",
+    "type" : "java.lang.Integer",
+    "description" : "Logfile size limit (default: auto)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.max_traced_msg_len",
+    "type" : "java.lang.Integer",
+    "description" : "Maximum printable length for traced messages (default: unlimited)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.jetstream",
@@ -161,6 +192,11 @@
     "name" : "nats.server.cluster",
     "type" : "java.lang.String",
     "description" : "Cluster URL for solicited routes",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.profile",
+    "type" : "java.lang.Integer",
+    "description" : "Profiling HTTP port",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.nats_system",

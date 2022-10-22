@@ -13,7 +13,7 @@ import org.springframework.test.context.MergedContextConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static berlin.yuna.natsserver.config.NatsConfig.ADDR;
+import static berlin.yuna.natsserver.config.NatsConfig.PROFILE;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -43,9 +43,9 @@ class NatsServerComponentRandomPortTest {
     }
 
     @Test
-    @DisplayName("Download and start server")
-    void natsServer_configureForCovWithWrongPort_shouldFailToStart() {
-        when(annotation.config()).thenReturn(new String[]{ADDR.name(), "invalid"});
+    @DisplayName("Configure with invalid config value [FAIL]")
+    void natsServer_withInvalidConfigValue_shouldFailToStart() {
+        when(annotation.config()).thenReturn(new String[]{PROFILE.name(), "invalid"});
         when(annotation.configFile()).thenReturn("invalid/path");
         assertThrows(NatsStartException.class, () -> contextCustomizer.customizeContext(ctx, mCtx));
     }
