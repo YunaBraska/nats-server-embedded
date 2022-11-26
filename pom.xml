@@ -36,12 +36,13 @@
 
     <properties>
         <!-- PROPERTIES -->
-        <java-version>8</java-version>
+        <java-version>17</java-version>
         <project.encoding>UTF-8</project.encoding>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
         <!-- VERSIONS -->
         <gson.version>2.10</gson.version>
+        <slf4j.version>2.0.5</slf4j.version>
         <semver4j.version>3.1.0</semver4j.version>
         <spring-boot.version>3.0.0</spring-boot.version>
         <nats-server.version>2.9.8</nats-server.version>
@@ -64,12 +65,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
 <!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>berlin.yuna</groupId>
             <artifactId>nats-server</artifactId>
             <version>${nats-server.version}</version>
+        </dependency>
+        <!-- Spring Boot 3-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- TEST -->
