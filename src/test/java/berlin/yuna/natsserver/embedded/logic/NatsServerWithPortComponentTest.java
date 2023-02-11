@@ -29,6 +29,6 @@ class NatsServerWithPortComponentTest {
         new Socket("localhost", 4234).close();
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4234));
-        natsServer.stop();
+        natsServer.close();
     }
 }

@@ -28,9 +28,9 @@ class NatsServerComponentRandomPortTest {
     @Test
     @DisplayName("Download and start server")
     void natsServer_shouldDownloadUnzipAndStart() throws IOException {
-        Files.deleteIfExists(natsServer.binaryFile());
+        Files.deleteIfExists(natsServer.binary());
         assertThat(natsServer, is(notNullValue()));
         System.out.println("Port: " + natsServer.port());
-        assertThat(natsServer.port(), is(greaterThan((int) PORT.valueRaw())));
+        assertThat(natsServer.port(), is(greaterThan(((int) PORT.defaultValue()))));
     }
 }

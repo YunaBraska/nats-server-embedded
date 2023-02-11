@@ -29,6 +29,6 @@ class NatsServerWithPortMapComponentTest {
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4235));
         assertThat(natsServer.pid(), is(greaterThan(-1)));
-        natsServer.stop();
+        natsServer.close();
     }
 }

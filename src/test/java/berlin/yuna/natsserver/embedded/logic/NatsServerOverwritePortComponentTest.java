@@ -29,6 +29,6 @@ class NatsServerOverwritePortComponentTest {
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4246));
         assertThat(natsServer.pid(), is(greaterThan(-1)));
-        natsServer.stop();
+        natsServer.close();
     }
 }

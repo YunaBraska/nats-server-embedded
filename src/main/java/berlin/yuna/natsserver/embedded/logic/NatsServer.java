@@ -1,5 +1,6 @@
 package berlin.yuna.natsserver.embedded.logic;
 
+import berlin.yuna.natsserver.config.NatsOptions;
 import berlin.yuna.natsserver.logic.Nats;
 import org.springframework.beans.factory.DisposableBean;
 
@@ -9,24 +10,21 @@ import org.springframework.beans.factory.DisposableBean;
 public class NatsServer extends Nats implements DisposableBean {
 
     public static final String BEAN_NAME = NatsServer.class.getSimpleName();
-    private final long timeoutMs;
 
     /**
      * Create {@link NatsServer} with the simplest start able configuration
-     *
-     * @param timeoutMs tear down timeout
      */
-    public NatsServer(final long timeoutMs) {
-        this.timeoutMs = timeoutMs;
+    public NatsServer(final NatsOptions options) {
+        super(options);
     }
 
     /**
      * Simply stops the {@link NatsServer}
      *
-     * @see NatsServer#stop()
+     * @see NatsServer#close()
      */
     @Override
     public void destroy() {
-        stop(timeoutMs);
+        close();
     }
 }

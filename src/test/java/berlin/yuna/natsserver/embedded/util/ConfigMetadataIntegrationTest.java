@@ -23,8 +23,10 @@ class ConfigMetadataIntegrationTest {
         final ConfigurationMetadata metadata = new ConfigurationMetadata("nats.server", NatsConfig.class);
         for (NatsConfig config : NatsConfig.values()) {
             final String name = config.name().toLowerCase();
-            final String desc = config.desc();
-            metadata.newProperties().name(name).description(parseDesc(desc)).type(parseType(desc)).defaultValue(config.valueRaw());
+            final String desc = config.description();
+            final Class<?> type = config.type();
+            final Object defaultValue = config.defaultValue();
+            metadata.newProperties().name(name).description(parseDesc(desc)).type(type == NatsConfig.SilentBoolean.class ? Boolean.class : type).defaultValue(defaultValue);
         }
 
         final Path generated = metadata.generate();

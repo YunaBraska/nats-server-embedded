@@ -6,6 +6,23 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   } ],
   "properties" : [ {
+    "name" : "nats.server.addr",
+    "type" : "java.lang.String",
+    "description" : "Bind to host address (default: 0.0.0.0)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : "0.0.0.0"
+  }, {
+    "name" : "nats.server.net",
+    "type" : "java.lang.String",
+    "description" : "Bind to host address (default: 0.0.0.0)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.port",
+    "type" : "java.lang.Integer",
+    "description" : "Use port for clients (default: 4222)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : 4222
+  }, {
     "name" : "nats.server.name",
     "type" : "java.lang.String",
     "description" : "Server name (default: auto)",
@@ -16,63 +33,10 @@
     "description" : "Server name (default: auto)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
-    "name" : "nats.server.signal",
-    "type" : "java.lang.String",
-    "description" : "[SIGNAL] Send signal to nats-server process (stop, quit, reopen)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
     "name" : "nats.server.pid",
-    "type" : "java.lang.String",
+    "type" : "java.nio.file.Path",
     "description" : "File to store PID",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.client_advertise",
-    "type" : "java.lang.String",
-    "description" : "Client URL to advertise to other servers",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.cluster_name",
-    "type" : "java.lang.String",
-    "description" : "Cluster Name, if not set one will be dynamically generated",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.no_advertise",
-    "type" : "java.lang.Boolean",
-    "description" : "Advertise known cluster IPs to clients",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.cluster_advertise",
-    "type" : "java.lang.String",
-    "description" : "Cluster URL to advertise to other servers",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.connect_retries",
-    "type" : "java.lang.Integer",
-    "description" : "For implicit routes, number of connect retries",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.cluster_listen",
-    "type" : "java.lang.String",
-    "description" : "Cluster url from which members can solicit routes",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.addr",
-    "type" : "java.lang.String",
-    "description" : "Bind to host address (default: 0.0.0.0)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
-    "defaultValue" : "0.0.0.0"
-  }, {
-    "name" : "nats.server.net",
-    "type" : "java.lang.String",
-    "description" : "Bind to host address (default: 0.0.0.0)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
-    "defaultValue" : "0.0.0.0"
-  }, {
-    "name" : "nats.server.port",
-    "type" : "java.lang.Integer",
-    "description" : "Use port for clients (default: 4222)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
-    "defaultValue" : 4222
   }, {
     "name" : "nats.server.http_port",
     "type" : "java.lang.Integer",
@@ -85,44 +49,81 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.config",
-    "type" : "java.lang.String",
+    "type" : "java.nio.file.Path",
     "description" : "Configuration file",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
-    "name" : "nats.server.ports_file_dir",
+    "name" : "nats.server.test_config",
+    "type" : "java.lang.Boolean",
+    "description" : "Test configuration and exit\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.signal",
     "type" : "java.lang.String",
-    "description" : "Creates a ports file in the specified directory (<executable_name>_<pid>.ports)",
+    "description" : "Send signal to nats-server process (ldm, stop, quit, term, reopen, reload)\n <pid> can be either a PID (e.g. 1) or the path to a PID file\n (e.g. /var/run/nats-server.pid) e.g. stop=pid",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.client_advertise",
+    "type" : "java.lang.String",
+    "description" : "Client URL to advertise to other servers",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.ports_file_dir",
+    "type" : "java.nio.file.Path",
+    "description" : "Creates a ports file in the specified directory (<executable_name>_<pid>.ports).",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.log",
-    "type" : "java.lang.String",
+    "type" : "java.nio.file.Path",
     "description" : "File to redirect log output",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
-    "name" : "nats.server.trace",
-    "type" : "java.lang.String",
-    "description" : "Trace the raw protocol",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.debug",
-    "type" : "java.lang.String",
-    "description" : "Enable debugging output",
+    "name" : "nats.server.log_timelog_time",
+    "type" : "java.lang.Boolean",
+    "description" : "Timestamp log entries (default: true)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.syslog",
-    "type" : "java.lang.String",
-    "description" : "Log to syslog or windows event log",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
-  }, {
-    "name" : "nats.server.logtime",
-    "type" : "java.lang.String",
-    "description" : "Timestamp log entries (default: true)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+    "type" : "java.lang.Boolean",
+    "description" : "Log to syslog or windows event log\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
   }, {
     "name" : "nats.server.remote_syslog",
     "type" : "java.lang.String",
     "description" : "Syslog server addr (udp://localhost:514)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.debug",
+    "type" : "java.lang.Boolean",
+    "description" : "Enable debugging output\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.trace",
+    "type" : "java.lang.Boolean",
+    "description" : "Trace the raw protocol\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.vv",
+    "type" : "java.lang.Boolean",
+    "description" : "Verbose trace (traces system account as well)\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.dv",
+    "type" : "java.lang.Boolean",
+    "description" : "Debug and trace\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.dvv",
+    "type" : "java.lang.Boolean",
+    "description" : "Debug and verbose trace (traces system account as well)\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
   }, {
     "name" : "nats.server.log_size_limit",
     "type" : "java.lang.Integer",
@@ -135,12 +136,13 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.jetstream",
-    "type" : "java.lang.String",
-    "description" : "Enable JetStream functionality",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+    "type" : "java.lang.Boolean",
+    "description" : "Enable JetStream functionality\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
   }, {
     "name" : "nats.server.store_dir",
-    "type" : "java.lang.String",
+    "type" : "java.nio.file.Path",
     "description" : "Set the storage directory",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
@@ -160,44 +162,106 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.tls",
-    "type" : "java.lang.String",
+    "type" : "java.lang.Boolean",
     "description" : "Enable TLS, do not verify clients (default: false)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
   }, {
-    "name" : "nats.server.tlscert",
-    "type" : "java.lang.String",
+    "name" : "nats.server.tls_cert",
+    "type" : "java.nio.file.Path",
     "description" : "Server certificate file",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
-    "name" : "nats.server.tlskey",
-    "type" : "java.lang.String",
+    "name" : "nats.server.tls_key",
+    "type" : "java.nio.file.Path",
     "description" : "Private key for server certificate",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
-    "name" : "nats.server.tlscacert",
-    "type" : "java.lang.String",
-    "description" : "Client certificate CA for verification",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+    "name" : "nats.server.tls_verify",
+    "type" : "java.lang.Boolean",
+    "description" : "Enable TLS, verify client certificates\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
   }, {
-    "name" : "nats.server.tlsverify",
-    "type" : "java.lang.String",
-    "description" : "Enable TLS, verify client certificates",
+    "name" : "nats.server.tls_ca_cert",
+    "type" : "java.nio.file.Path",
+    "description" : "Client certificate CA for verification",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.routes",
     "type" : "java.lang.String",
-    "description" : "Routes to solicit and connect",
+    "description" : "Routes to solicit and connect\ne.g. rurl-1, rurl-2",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.cluster",
-    "type" : "java.lang.String",
+    "type" : "java.net.URL",
     "description" : "Cluster URL for solicited routes",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.cluster_name",
+    "type" : "java.lang.String",
+    "description" : "Cluster Name, if not set one will be dynamically generated",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.no_advertise",
+    "type" : "java.lang.Boolean",
+    "description" : "Do not advertise known cluster information to clients\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.luster_advertise",
+    "type" : "java.net.URL",
+    "description" : "Cluster URL to advertise to other servers",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.connect_retries",
+    "type" : "java.lang.Integer",
+    "description" : "For implicit routes, number of connect retries",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.cluster_listen",
+    "type" : "java.net.URL",
+    "description" : "Cluster url from which members can solicit routes",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.profile",
     "type" : "java.lang.Integer",
     "description" : "Profiling HTTP port",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.help",
+    "type" : "java.lang.Boolean",
+    "description" : "Show this message\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.version",
+    "type" : "java.lang.Boolean",
+    "description" : "Show version\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.help_tls",
+    "type" : "java.lang.Boolean",
+    "description" : "TLS help\n(default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : false
+  }, {
+    "name" : "nats.server.nats_autostart",
+    "type" : "java.lang.Boolean",
+    "description" : "== auto closable, [false] == manual use `.start()` method (default: true)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : true
+  }, {
+    "name" : "nats.server.nats_log_level",
+    "type" : "java.lang.String",
+    "description" : "",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
+    "name" : "nats.server.nats_timeout_ms",
+    "type" : "java.lang.String",
+    "description" : "true = auto closable, false manual use `.start()` method",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : 10000
   }, {
     "name" : "nats.server.nats_system",
     "type" : "java.lang.String",
@@ -217,24 +281,24 @@
     "defaultValue" : "v2.9.14"
   }, {
     "name" : "nats.server.nats_download_url",
-    "type" : "java.lang.String",
+    "type" : "java.net.URL",
     "description" : "Path to Nats binary or zip file",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
     "defaultValue" : "https://github.com/nats-io/nats-server/releases/download/%NATS_VERSION%/nats-server-%NATS_VERSION%-%NATS_SYSTEM%.zip"
   }, {
     "name" : "nats.server.nats_binary_path",
-    "type" : "java.lang.String",
+    "type" : "java.nio.file.Path",
     "description" : "Target Path to Nats binary or zip file - auto from NATS_DOWNLOAD_URL",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
-    "name" : "nats.server.nats_config_file",
-    "type" : "java.lang.String",
-    "description" : "Additional property file with config value",
+    "name" : "nats.server.nats_property_file",
+    "type" : "java.nio.file.Path",
+    "description" : "Additional config file (properties / KV) same as DSL configs",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.nats_args",
     "type" : "java.lang.String",
-    "description" : "custom arguments separated by \\, or just space",
+    "description" : "custom arguments separated by &&",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   } ]
 }

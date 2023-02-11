@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
 
+import static berlin.yuna.natsserver.config.NatsOptions.natsBuilder;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,7 +31,7 @@ class NatsServerComponentTest {
     @Test
     @DisplayName("Download and start server")
     void natsServer_shouldDownloadUnzipAndStart() throws IOException {
-        Files.deleteIfExists(natsServer.binaryFile());
+        Files.deleteIfExists(natsServer.binary());
         assertThat(natsServer, is(notNullValue()));
         assertThat(natsServer.port(), is(4222));
         assertThat(natsServer.pid(), is(greaterThan(-1)));
@@ -66,15 +67,10 @@ class NatsServerComponentTest {
     }
 
     private void assertNatsServerStart(final int port, final String... config) {
-        final NatsServer natsServer = new NatsServer(10000);
-        natsServer.config(config);
-        try {
-            natsServer.start();
+        try (final NatsServer natsServer = new NatsServer(natsBuilder().timeoutMs(10000).config(config).build())) {
             new Socket("localhost", port).close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            natsServer.stop();
+            throw new IllegalArgumentException(e);
         }
     }
 }

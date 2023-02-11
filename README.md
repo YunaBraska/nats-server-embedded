@@ -44,6 +44,6 @@ Nats Server for testing which contains the original [Nats server](https://github
 [label_shield]: https://img.shields.io/badge/Yuna-QueenInside-blueviolet?style=flat-square
 [gitter_shield]: https://img.shields.io/gitter/room/YunaBraska/nats-server-embedded?style=flat-square
 [gitter_link]: https://gitter.im/nats-server-embedded/Lobby
-[spring_boot_3]: https://img.shields.io/badge/SpringBoot-3-blueviolet?style=flat-square
+[spring_boot_3]: https://img.shields.io/badge/SpringBoot-2-blueviolet?style=flat-square
 
 For more, have a look to the [Documentation (GitHubPage)](https://yunabraska.github.io/nats-server/) *(You will find Examples, Configs, Spring, Junit, etc.)*
