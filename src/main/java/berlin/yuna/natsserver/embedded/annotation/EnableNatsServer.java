@@ -68,4 +68,9 @@ public @interface EnableNatsServer {
      * {@link berlin.yuna.natsserver.config.NatsConfig}
      */
     String[] config() default {};
+
+    /**
+     * Sets the version for the {@link NatsServer}
+     */
+    String version() default "";
 }

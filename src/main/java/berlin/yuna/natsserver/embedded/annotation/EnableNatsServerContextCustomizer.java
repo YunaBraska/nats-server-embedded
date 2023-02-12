@@ -19,6 +19,7 @@ import static berlin.yuna.natsserver.config.NatsConfig.NATS_PROPERTY_FILE;
 import static berlin.yuna.natsserver.config.NatsConfig.PORT;
 import static berlin.yuna.natsserver.config.NatsOptions.natsBuilder;
 import static berlin.yuna.natsserver.embedded.logic.NatsServer.BEAN_NAME;
+import static berlin.yuna.natsserver.logic.NatsUtils.isNotEmpty;
 import static java.util.Optional.ofNullable;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.util.StringUtils.hasText;
@@ -60,7 +61,7 @@ class EnableNatsServerContextCustomizer implements ContextCustomizer {
         if (enableNatsServer.port() != (Integer) PORT.defaultValue()) {
             options.port(enableNatsServer.port());
         }
-        options.config(enableNatsServer.config());
+        options.config(enableNatsServer.config()).version(isNotEmpty(enableNatsServer.version()) ? enableNatsServer.version() : options.version());
         configure(options, NATS_PROPERTY_FILE, enableNatsServer.configFile());
         configure(options, NATS_BINARY_PATH, enableNatsServer.binaryFile());
         configure(options, NATS_DOWNLOAD_URL, enableNatsServer.downloadUrl());

@@ -26,29 +26,10 @@ class ConfigMetadataIntegrationTest {
             final String desc = config.description();
             final Class<?> type = config.type();
             final Object defaultValue = config.defaultValue();
-            metadata.newProperties().name(name).description(parseDesc(desc)).type(type == NatsConfig.SilentBoolean.class ? Boolean.class : type).defaultValue(defaultValue);
+            metadata.newProperties().name(name).description(desc).type(type == NatsConfig.SilentBoolean.class ? Boolean.class : type).defaultValue(defaultValue);
         }
 
         final Path generated = metadata.generate();
         assertThat(generated, is(notNullValue()));
-    }
-
-    private String parseDesc(final String description) {
-        return description.substring(description.indexOf(']') + 1).trim();
-    }
-
-    private Class<?> parseType(final String description) {
-        String goType = description.replace("-", "");
-        goType = goType.substring(1, goType.indexOf(']')).trim();
-        switch (goType) {
-            case "INT":
-                return Integer.class;
-            case "SIZE":
-                return Long.class;
-            case "BOOL":
-                return Boolean.class;
-            default:
-                return String.class;
-        }
     }
 }

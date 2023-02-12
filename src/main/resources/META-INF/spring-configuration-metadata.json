@@ -6,27 +6,17 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   } ],
   "properties" : [ {
-    "name" : "nats.server.addr",
+    "name" : "nats.server.net",
     "type" : "java.lang.String",
     "description" : "Bind to host address (default: 0.0.0.0)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
     "defaultValue" : "0.0.0.0"
-  }, {
-    "name" : "nats.server.net",
-    "type" : "java.lang.String",
-    "description" : "Bind to host address (default: 0.0.0.0)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.port",
     "type" : "java.lang.Integer",
     "description" : "Use port for clients (default: 4222)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
     "defaultValue" : 4222
-  }, {
-    "name" : "nats.server.name",
-    "type" : "java.lang.String",
-    "description" : "Server name (default: auto)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.server_name",
     "type" : "java.lang.String",
@@ -209,7 +199,7 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.luster_advertise",
-    "type" : "java.net.URL",
+    "type" : "java.lang.String",
     "description" : "Cluster URL to advertise to other servers",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
@@ -234,12 +224,6 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
     "defaultValue" : false
   }, {
-    "name" : "nats.server.version",
-    "type" : "java.lang.Boolean",
-    "description" : "Show version\n(default: false)",
-    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
-    "defaultValue" : false
-  }, {
     "name" : "nats.server.help_tls",
     "type" : "java.lang.Boolean",
     "description" : "TLS help\n(default: false)",
@@ -248,13 +232,13 @@
   }, {
     "name" : "nats.server.nats_autostart",
     "type" : "java.lang.Boolean",
-    "description" : "== auto closable, [false] == manual use `.start()` method (default: true)",
+    "description" : "[true] == auto closable, [false] == manual use `.start()` method (default: true)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
     "defaultValue" : true
   }, {
     "name" : "nats.server.nats_log_level",
     "type" : "java.lang.String",
-    "description" : "",
+    "description" : "java log level e.g. [OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL]",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
     "name" : "nats.server.nats_timeout_ms",
