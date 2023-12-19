@@ -45,8 +45,8 @@
         <slf4j.version>2.0.6</slf4j.version>
         <semver4j.version>3.1.0</semver4j.version>
         <spring-boot.version>[2.7.7,3.0.0)</spring-boot.version>
-        <nats-server.version>2.10.8-rc.1</nats-server.version>
-        <config-metadata-generator.version>0.6.121</config-metadata-generator.version>
+        <nats-server.version>2.10.8-rc.2</nats-server.version>
+        <config-metadata-generator.version>0.6.122</config-metadata-generator.version>
         <!-- VERSIONS BUILD -->
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-scm-plugin.version>1.11.2</maven-scm-plugin.version>
@@ -54,7 +54,7 @@
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.12.0</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>3.2.3</maven-failsafe-plugin.version>
         <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
