@@ -236,6 +236,12 @@
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
     "defaultValue" : true
   }, {
+    "name" : "nats.server.nats_shutdown_hook",
+    "type" : "java.lang.Boolean",
+    "description" : "[true] == registers a shutdown hook, [false] == manual use `.stop()` method (default: true)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
+    "defaultValue" : true
+  }, {
     "name" : "nats.server.nats_log_level",
     "type" : "java.lang.String",
     "description" : "java log level e.g. [OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL]",
@@ -262,7 +268,7 @@
     "type" : "java.lang.String",
     "description" : "Overwrites Nats server version on path",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
-    "defaultValue" : "v2.10.26"
+    "defaultValue" : "v2.11.0"
   }, {
     "name" : "nats.server.nats_download_url",
     "type" : "java.net.URL",
