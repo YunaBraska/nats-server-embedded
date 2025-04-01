@@ -45,7 +45,7 @@
         <slf4j.version>2.0.6</slf4j.version>
         <semver4j.version>3.1.0</semver4j.version>
         <spring-boot.version>[2.7.7,3.0.0)</spring-boot.version>
-        <nats-server.version>2.11.1-rc.1</nats-server.version>
+        <nats-server.version>2.11.1-binary</nats-server.version>
         <config-metadata-generator.version>0.6.174</config-metadata-generator.version>
         <!-- VERSIONS BUILD -->
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
