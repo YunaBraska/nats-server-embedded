@@ -1,0 +1,38 @@
+name: "Build"
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_update:
+        type: boolean
+        default: false
+        required: false
+        description: "Update wrapper and properties"
+      run_test:
+        type: boolean
+        default: true
+        required: false
+        description: "Runs tests"
+      run_deploy:
+        type: choice
+        required: false
+        default: "false"
+        description: "true=force, false=on changes, disabled=never"
+        options:
+          - "disabled"
+          - "true"
+          - "false"
+      ref:
+        type: string
+        required: false
+        description: "[Optional] branch, tag or commit"
+
+jobs:
+  builld:
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_build.yml@main
+    with:
+      ref: ${{ github.event.inputs.ref || github.ref || github.ref_name || github.head_ref }}
+      run_update: ${{ inputs.run_update }}
+      run_test: ${{ inputs.run_test }}
+      run_deploy: ${{ inputs.run_deploy }}
+    secrets: inherit

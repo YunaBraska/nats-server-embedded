@@ -40,24 +40,31 @@
         <project.encoding>UTF-8</project.encoding>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+
+        <!-- PROD -->
+        <spring-boot.version>[2.7.7,3.0.0)</spring-boot.version>
+        <nats-server.version>2.11.5-rc.3</nats-server.version>
+        <command-line-util.version>2.1.47</command-line-util.version>
+        <config-metadata-generator.version>2025.06.1520948</config-metadata-generator.version>
+
+        <!-- TEST -->
+        <junit.version>5.13.0</junit.version>
+        <semver4j.version>3.1.0</semver4j.version>
+        <assertj-core.version>3.27.3</assertj-core.version>
+        <junit-launcher.version>1.13.0</junit-launcher.version>
+
         <!-- VERSIONS -->
         <gson.version>2.13.1</gson.version>
         <slf4j.version>2.0.6</slf4j.version>
-        <semver4j.version>3.1.0</semver4j.version>
-        <spring-boot.version>[2.7.7,3.0.0)</spring-boot.version>
-        <nats-server.version>2.11.5-rc.3</nats-server.version>
-        <config-metadata-generator.version>2025.06.1520948</config-metadata-generator.version>
-        <!-- VERSIONS BUILD -->
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-scm-plugin.version>1.11.2</maven-scm-plugin.version>
+
+        <!-- BUILD -->
+        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-        <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -98,6 +105,30 @@
             <version>${semver4j.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit-launcher.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -109,6 +140,7 @@
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
+                    <release>${java-version}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -116,31 +148,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <groups>UnitTest</groups>
-                    <excludedGroups>IntegrationTest</excludedGroups>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven-failsafe-plugin.version}</version>
-                <configuration>
-                    <groups>IntegrationTest</groups>
-                    <excludedGroups>UnitTest</excludedGroups>
-                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -218,35 +229,6 @@
     <!-- MAVEN CENTRAL USAGE -->
     <profiles>
         <profile>
-            <id>tag</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-scm-plugin</artifactId>
-                        <version>${maven-scm-plugin.version}</version>
-                        <configuration>
-                            <tag>${project.version}</tag>
-                        </configuration>
-                        <!-- only tag this module, not each individually -->
-                        <inherited>false</inherited>
-                        <executions>
-                            <execution>
-                                <id>git-tag</id>
-                                <goals>
-                                    <goal>tag</goal>
-                                </goals>
-                                <phase>deploy</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <!-- mvn clean deploy -P release -->
             <id>release</id>
             <activation>
@@ -270,10 +252,12 @@
                                     <goal>jar</goal>
                                 </goals>
                                 <configuration>
+                                    <release>${java-version}</release>
                                     <nodeprecatedlist>true</nodeprecatedlist>
                                     <quiet>true</quiet>
                                     <!-- disable strict checking -->
                                     <doclint>none</doclint>
+                                    <failOnError>false</failOnError>
                                 </configuration>
                             </execution>
                         </executions>
@@ -316,40 +300,21 @@
 
                     <!-- DEPLOYMENT -->
                     <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus-staging-maven-plugin.version}</version>
+                        <!-- https://central.sonatype.org/publish/publish-portal-maven/#plugin-configuration-options -->
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${central-publishing-maven-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <version>${maven-release-plugin.version}</version>
-                        <configuration>
-                            <autoVersionSubmodules>true</autoVersionSubmodules>
-                            <useReleaseProfile>true</useReleaseProfile>
-                            <releaseProfiles>release</releaseProfiles>
-                            <goals>deploy</goals>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                            <deploymentName>${project.groupId}:${project.artifactId}:${project.version}
+                            </deploymentName>
+                            <!--                                <ignorePublishedComponents>true</ignorePublishedComponents>-->
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
-
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
         </profile>
     </profiles>
 </project>

@@ -20,8 +20,8 @@ Nats Server for testing which contains the original [Nats server](https://github
 ![Label][label_shield]
 ![Label][spring_boot_3]
 
-[build_shield]: https://github.com/YunaBraska/nats-server-embedded/workflows/MVN_RELEASE/badge.svg
-[build_link]: https://github.com/YunaBraska/nats-server-embedded/actions?query=workflow%3AMVN_RELEASE
+[build_shield]: https://github.com/YunaBraska/nats-server-embedded/workflows/Daily/badge.svg
+[build_link]: https://github.com/YunaBraska/nats-server-embedded/actions?query=workflow%3ADaily
 [maintainable_shield]: https://img.shields.io/codeclimate/maintainability/YunaBraska/nats-server-embedded?style=flat-square
 [maintainable_link]: https://codeclimate.com/github/YunaBraska/nats-server-embedded/maintainability
 [coverage_shield]: https://img.shields.io/codeclimate/coverage/YunaBraska/nats-server-embedded?style=flat-square

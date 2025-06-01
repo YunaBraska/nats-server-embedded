@@ -1,0 +1,15 @@
+name: "Daily"
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  builld:
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_build.yml@main
+    with:
+      run_update: true
+      run_test: true
+      run_deploy: false
+    secrets: inherit
