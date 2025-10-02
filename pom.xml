@@ -36,7 +36,7 @@
 
     <properties>
         <!-- PROPERTIES -->
-        <java-version>11</java-version>
+        <java-version>17</java-version>
         <project.encoding>UTF-8</project.encoding>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
@@ -48,10 +48,10 @@
         <config-metadata-generator.version>2025.09.2650511</config-metadata-generator.version>
 
         <!-- TEST -->
-        <junit.version>5.13.4</junit.version>
+        <junit.version>6.0.0</junit.version>
         <semver4j.version>3.1.0</semver4j.version>
         <assertj-core.version>3.27.6</assertj-core.version>
-        <junit-launcher.version>1.13.4</junit-launcher.version>
+        <junit-launcher.version>6.0.0</junit-launcher.version>
 
         <!-- VERSIONS -->
         <gson.version>2.13.2</gson.version>
