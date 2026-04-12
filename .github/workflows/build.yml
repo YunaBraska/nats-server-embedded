@@ -1,6 +1,15 @@
 name: "Build"
 
+permissions: {}
+
 on:
+  push:
+    branches:
+      - "**"
+    tags-ignore:
+      - "*"
+  schedule:
+    - cron: "0 10 * * *"
   workflow_dispatch:
     inputs:
       run_update:
@@ -13,26 +22,97 @@ on:
         default: true
         required: false
         description: "Runs tests"
-      run_deploy:
-        type: choice
+      create_tag:
+        type: boolean
+        default: false
         required: false
-        default: "false"
-        description: "true=force, false=on changes, disabled=never"
-        options:
-          - "disabled"
-          - "true"
-          - "false"
+        description: "Create and push a release tag"
       ref:
         type: string
         required: false
         description: "[Optional] branch, tag or commit"
 
 jobs:
-  builld:
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_build.yml@main
+  context:
+    name: "📄 Context"
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      ref: ${{ steps.values.outputs.ref }}
+      run_update: ${{ steps.values.outputs.run_update }}
+      run_test: ${{ steps.values.outputs.run_test }}
+      create_tag: ${{ steps.values.outputs.create_tag }}
+    steps:
+      - name: "🧭 Resolve Build Mode"
+        id: values
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch || 'main' }}
+          REF: ${{ github.ref }}
+          REF_NAME: ${{ github.ref_name }}
+          HEAD_REF: ${{ github.head_ref }}
+          INPUT_REF: ${{ github.event.inputs.ref }}
+          INPUT_RUN_UPDATE: ${{ github.event.inputs.run_update }}
+          INPUT_RUN_TEST: ${{ github.event.inputs.run_test }}
+          INPUT_CREATE_TAG: ${{ github.event.inputs.create_tag }}
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          set -euo pipefail
+
+          ref="${INPUT_REF:-}"
+          if [[ -z "$ref" ]]; then
+            if [[ -n "${REF:-}" ]]; then
+              ref="$REF"
+            elif [[ -n "${REF_NAME:-}" ]]; then
+              ref="$REF_NAME"
+            else
+              ref="$HEAD_REF"
+            fi
+          fi
+
+          run_update="false"
+          run_test="true"
+          create_tag="false"
+
+          case "$EVENT_NAME" in
+            schedule)
+              run_update="true"
+              create_tag="true"
+              ;;
+            workflow_dispatch)
+              if [[ "${INPUT_RUN_UPDATE:-}" == "true" ]]; then
+                run_update="true"
+              fi
+              if [[ "${INPUT_RUN_TEST:-}" == "false" ]]; then
+                run_test="false"
+              fi
+              if [[ "${INPUT_CREATE_TAG:-}" == "true" ]]; then
+                create_tag="true"
+              fi
+              ;;
+            push)
+              if [[ "${REF_NAME:-}" == "${DEFAULT_BRANCH:-main}" && ! "${HEAD_COMMIT_MESSAGE:-}" == "chore: 🏷️ release ["* ]]; then
+                create_tag="true"
+              fi
+              ;;
+          esac
+
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+          echo "run_update=$run_update" >> "$GITHUB_OUTPUT"
+          echo "run_test=$run_test" >> "$GITHUB_OUTPUT"
+          echo "create_tag=$create_tag" >> "$GITHUB_OUTPUT"
+
+  pipeline:
+    needs: context
+    permissions:
+      contents: write
+      packages: read
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_pipeline.yml@main
     with:
-      ref: ${{ github.event.inputs.ref || github.ref || github.ref_name || github.head_ref }}
-      run_update: ${{ inputs.run_update }}
-      run_test: ${{ inputs.run_test }}
-      run_deploy: ${{ inputs.run_deploy }}
+      ref: ${{ needs.context.outputs.ref }}
+      version_policy: nats-sync
+      run_update: ${{ needs.context.outputs.run_update == 'true' }}
+      run_test: ${{ needs.context.outputs.run_test == 'true' }}
+      create_tag: ${{ needs.context.outputs.create_tag == 'true' }}
     secrets: inherit
