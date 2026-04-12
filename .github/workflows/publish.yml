@@ -1,0 +1,32 @@
+name: "Publish"
+
+permissions: {}
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: "Existing git tag to publish"
+
+jobs:
+  github_release:
+    permissions:
+      contents: write
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_github_release.yml@main
+    with:
+      version: ${{ inputs.version || github.ref_name }}
+    secrets: inherit
+
+  github_packages:
+    permissions:
+      contents: read
+      packages: write
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_github_packages.yml@main
+    with:
+      version: ${{ inputs.version || github.ref_name }}
+    secrets: inherit
