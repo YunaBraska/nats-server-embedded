@@ -1,0 +1,76 @@
+# yuna-release: true
+name: 🏷️ CD · Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      maven_central:
+        description: Maven Central.
+        required: true
+        default: true
+        type: boolean
+      github_packages:
+        description: GitHub Packages.
+        required: true
+        default: true
+        type: boolean
+      force:
+        description: Force.
+        required: true
+        default: false
+        type: boolean
+
+permissions: {}
+
+jobs:
+  release:
+    permissions:
+      contents: read
+      packages: read
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_release.yml@81f3937399028513b70b4258e032ac856768dbfd
+    with:
+      force: ${{ inputs.force }}
+      semver_strategy: snapshot
+      upstream_repository: nats-io/nats-server
+      dry_run: ${{ inputs.maven_central != true || inputs.github_packages != true }}
+
+  central:
+    needs:
+      - release
+    if: ${{ always() && !cancelled() && needs.release.result == 'success' }}
+    permissions:
+      actions: read
+      contents: read
+      deployments: write
+      packages: read
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_publish_central.yml@81f3937399028513b70b4258e032ac856768dbfd
+    secrets:
+      CENTRAL_USER: ${{ secrets.CENTRAL_USER }}
+      CENTRAL_PASS: ${{ secrets.CENTRAL_PASS }}
+      GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+  packages:
+    needs:
+      - release
+    if: ${{ always() && !cancelled() && needs.release.result == 'success' }}
+    permissions:
+      actions: read
+      contents: read
+      deployments: write
+      packages: write
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_publish_github_packages.yml@81f3937399028513b70b4258e032ac856768dbfd
+
+  github:
+    needs:
+      - release
+      - central
+      - packages
+    if: ${{ always() && !cancelled() && needs.release.outputs.dry_run == 'false' && !endsWith(needs.release.outputs.version, '-SNAPSHOT') && needs.release.result == 'success' && needs.central.result == 'success' && needs.packages.result == 'success' }}
+    permissions:
+      actions: read
+      contents: write
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_create_github_release.yml@81f3937399028513b70b4258e032ac856768dbfd
+    with:
+      commit_sha: ${{ needs.release.outputs.commit_sha }}
+      version: ${{ needs.release.outputs.version }}
