@@ -6,7 +6,7 @@
 
     <groupId>berlin.yuna</groupId>
     <artifactId>nats-server-embedded</artifactId>
-    <version>2.14.4</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>nats-server-embedded</name>
@@ -40,6 +40,7 @@
         <project.encoding>UTF-8</project.encoding>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+        <project.build.outputTimestamp>1980-01-01T00:00:02Z</project.build.outputTimestamp>
 
         <!-- PROD -->
         <spring-boot.version>[2.7.7,3.0.0)</spring-boot.version>
@@ -49,7 +50,6 @@
 
         <!-- TEST -->
         <junit.version>6.1.3</junit.version>
-        <semver4j.version>3.1.0</semver4j.version>
         <assertj-core.version>3.27.7</assertj-core.version>
         <junit-launcher.version>6.1.3</junit-launcher.version>
 
@@ -63,6 +63,7 @@
         <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
         <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
     </properties>
@@ -97,12 +98,6 @@
             <groupId>berlin.yuna</groupId>
             <artifactId>config-metadata-generator</artifactId>
             <version>${config-metadata-generator.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.vdurmont</groupId>
-            <artifactId>semver4j</artifactId>
-            <version>${semver4j.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -141,6 +136,14 @@
                     <source>${java-version}</source>
                     <target>${java-version}</target>
                     <release>${java-version}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <configuration>
+                    <outputTimestamp>${project.build.outputTimestamp}</outputTimestamp>
                 </configuration>
             </plugin>
             <plugin>
@@ -226,18 +229,10 @@
         </plugins>
     </build>
 
-    <!-- MAVEN CENTRAL USAGE -->
+    <!-- MAVEN CENTRAL -->
     <profiles>
         <profile>
-            <!-- mvn clean deploy -P release -->
-            <id>release</id>
-            <activation>
-                <property>
-                    <name>release</name>
-                    <value>true</value>
-                </property>
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <id>central</id>
             <build>
                 <plugins>
                     <!-- QUALITY GATE -->
@@ -308,6 +303,7 @@
                         <configuration>
                             <publishingServerId>central</publishingServerId>
                             <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
                             <deploymentName>${project.groupId}:${project.artifactId}:${project.version}
                             </deploymentName>
                             <!--                                <ignorePublishedComponents>true</ignorePublishedComponents>-->
