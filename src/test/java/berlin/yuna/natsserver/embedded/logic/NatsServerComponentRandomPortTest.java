@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
-import java.nio.file.Files;
-
 import static berlin.yuna.natsserver.config.NatsConfig.PORT;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -26,9 +23,8 @@ class NatsServerComponentRandomPortTest {
     private NatsServer natsServer;
 
     @Test
-    @DisplayName("Download and start server")
-    void natsServer_shouldDownloadUnzipAndStart() throws IOException {
-        Files.deleteIfExists(natsServer.binary());
+    @DisplayName("Start server")
+    void natsServer_shouldStart() {
         assertThat(natsServer, is(notNullValue()));
         System.out.println("Port: " + natsServer.port());
         assertThat(natsServer.port(), is(greaterThan(((int) PORT.defaultValue()))));

@@ -7,10 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
 import java.net.Socket;
-import java.nio.file.Files;
 
+import static berlin.yuna.natsserver.config.NatsConfig.PORT;
 import static berlin.yuna.natsserver.config.NatsOptions.natsBuilder;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -20,7 +19,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@EnableNatsServer
+@EnableNatsServer(port = -1)
 @Tag("IntegrationTest")
 @DisplayName("NatsServerComponentTest")
 class NatsServerComponentTest {
@@ -29,11 +28,10 @@ class NatsServerComponentTest {
     private NatsServer natsServer;
 
     @Test
-    @DisplayName("Download and start server")
-    void natsServer_shouldDownloadUnzipAndStart() throws IOException {
-        Files.deleteIfExists(natsServer.binary());
+    @DisplayName("Start server on a random port")
+    void natsServer_shouldStartOnARandomPort() {
         assertThat(natsServer, is(notNullValue()));
-        assertThat(natsServer.port(), is(4222));
+        assertThat(natsServer.port(), is(greaterThan((int) PORT.defaultValue())));
         assertThat(natsServer.pid(), is(greaterThan(-1)));
     }
 
@@ -63,7 +61,7 @@ class NatsServerComponentTest {
     @DisplayName("ToString")
     void toString_shouldPrintPortAndOs() {
         final String serverString = natsServer.toString();
-        assertThat(serverString, containsString("4222"));
+        assertThat(serverString, containsString(String.valueOf(natsServer.port())));
     }
 
     private void assertNatsServerStart(final int port, final String... config) {
