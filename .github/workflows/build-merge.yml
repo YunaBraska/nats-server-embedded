@@ -28,7 +28,7 @@ jobs:
     permissions:
       contents: read
       packages: read
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_release.yml@81f3937399028513b70b4258e032ac856768dbfd
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_release.yml@93dcc244b1713aeb9594aff65df1a2901ded707f
     with:
       semver_strategy: snapshot
       upstream_repository: nats-io/nats-server
@@ -43,7 +43,7 @@ jobs:
       contents: read
       deployments: write
       packages: read
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_publish_central.yml@81f3937399028513b70b4258e032ac856768dbfd
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_publish_central.yml@93dcc244b1713aeb9594aff65df1a2901ded707f
     secrets:
       CENTRAL_USER: ${{ secrets.CENTRAL_USER }}
       CENTRAL_PASS: ${{ secrets.CENTRAL_PASS }}
@@ -59,4 +59,4 @@ jobs:
       contents: read
       deployments: write
       packages: write
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_publish_github_packages.yml@81f3937399028513b70b4258e032ac856768dbfd
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_publish_github_packages.yml@93dcc244b1713aeb9594aff65df1a2901ded707f
