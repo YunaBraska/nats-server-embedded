@@ -1,4 +1,5 @@
-# yuna-java-upstream: nats-io/nats-server
+# yuna-java-upstream: YunaBraska/nats-server
+# yuna-java-upstream-property: nats-server.version
 name: 🛠️ CI · Maintenance
 
 on:

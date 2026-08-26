@@ -10,6 +10,8 @@ updates:
       maven-all:
         patterns:
           - '*'
+    ignore:
+      - dependency-name: berlin.yuna:nats-server
 
   - package-ecosystem: github-actions
     directory: /
