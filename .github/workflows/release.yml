@@ -27,7 +27,7 @@ jobs:
     permissions:
       contents: read
       packages: read
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_release.yml@93dcc244b1713aeb9594aff65df1a2901ded707f
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_release.yml@4d93ab87f2ad57c7cb8e0f228408d488d5b526e6
     with:
       force: ${{ inputs.force }}
       semver_strategy: snapshot
@@ -66,7 +66,7 @@ jobs:
       - release
       - central
       - packages
-    if: ${{ always() && !cancelled() && needs.release.outputs.dry_run == 'false' && !endsWith(needs.release.outputs.version, '-SNAPSHOT') && needs.release.result == 'success' && needs.central.result == 'success' && needs.packages.result == 'success' }}
+    if: ${{ always() && !cancelled() && needs.release.outputs.version != '' && !endsWith(needs.release.outputs.version, '-SNAPSHOT') && needs.release.result == 'success' && needs.central.result == 'success' && needs.packages.result == 'success' }}
     permissions:
       actions: read
       contents: write
