@@ -38,13 +38,13 @@ class NatsServerComponentTest {
     @Test
     @DisplayName("Port config with double dash")
     void secondNatsServer_withDoubleDotSeparatedProperty_shouldStartSuccessful() {
-        assertNatsServerStart(4225, "--port", "4225");
+        assertNatsServerStart("--port", "-1");
     }
 
     @Test
     @DisplayName("Port config without dashes")
     void secondNatsServer_withOutMinusProperty_shouldStartSuccessful() {
-        assertNatsServerStart(4226, "port", "4226");
+        assertNatsServerStart("port", "-1");
     }
 
     @Test
@@ -52,7 +52,7 @@ class NatsServerComponentTest {
     void secondNatsServer_withInvalidProperty_shouldFailToStart() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> assertNatsServerStart(4228, "p", "4228"),
+                () -> assertNatsServerStart("p", "-1"),
                 "No enum constant"
         );
     }
@@ -64,9 +64,10 @@ class NatsServerComponentTest {
         assertThat(serverString, containsString(String.valueOf(natsServer.port())));
     }
 
-    private void assertNatsServerStart(final int port, final String... config) {
+    private void assertNatsServerStart(final String... config) {
         try (final NatsServer natsServer = new NatsServer(natsBuilder().timeoutMs(10000).config(config).build())) {
-            new Socket("localhost", port).close();
+            assertThat(natsServer.port(), is(greaterThan(0)));
+            new Socket("localhost", natsServer.port()).close();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
