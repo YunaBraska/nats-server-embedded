@@ -74,6 +74,11 @@
     "description" : "Timestamp log entries (default: true)",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
   }, {
+    "name" : "nats.server.logtime_utc",
+    "type" : "java.lang.Boolean",
+    "description" : "Timestamps in UTC instead of local timezone (default: false)",
+    "sourceType" : "berlin.yuna.natsserver.config.NatsConfig"
+  }, {
     "name" : "nats.server.syslog",
     "type" : "java.lang.Boolean",
     "description" : "Log to syslog or windows event log\n(default: false)",
@@ -268,7 +273,7 @@
     "type" : "java.lang.String",
     "description" : "Overwrites Nats server version on path",
     "sourceType" : "berlin.yuna.natsserver.config.NatsConfig",
-    "defaultValue" : "v2.14.6"
+    "defaultValue" : "v2.15.0"
   }, {
     "name" : "nats.server.nats_download_url",
     "type" : "java.net.URL",
