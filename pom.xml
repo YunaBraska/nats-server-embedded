@@ -46,7 +46,7 @@
         <spring-boot.version>[2.7.7,3.0.0)</spring-boot.version>
         <nats-server.version>2.15.0</nats-server.version>
         <command-line-util.version>2.1.47</command-line-util.version>
-        <config-metadata-generator.version>2026.9.14</config-metadata-generator.version>
+        <config-metadata-generator.version>2026.9.28</config-metadata-generator.version>
 
         <!-- TEST -->
         <junit.version>6.1.3</junit.version>
