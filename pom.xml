@@ -299,7 +299,7 @@
                         <configuration>
                             <publishingServerId>central</publishingServerId>
                             <autoPublish>true</autoPublish>
-                            <waitUntil>published</waitUntil>
+                            <waitUntil>validated</waitUntil>
                             <deploymentName>${project.groupId}:${project.artifactId}:${project.version}
                             </deploymentName>
                             <!--                                <ignorePublishedComponents>true</ignorePublishedComponents>-->
