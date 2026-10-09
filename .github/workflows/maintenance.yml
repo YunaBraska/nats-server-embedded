@@ -29,7 +29,7 @@ jobs:
       contents: write
       packages: read
       pull-requests: write
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_upstream.yml@5b74baf9f3b43e6e4b43c249c4dd8f3bff4b739e
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_upstream.yml@06f843e3b039c590fecbaa2aca75a27bf1e4dd7c
     with:
       upstream_repository: nats-io/nats-server
       upstream_property: nats-server.version
