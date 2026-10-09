@@ -19,7 +19,7 @@ jobs:
       actions: write
       contents: write
       pull-requests: write
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_maven_wrapper.yml@93dcc244b1713aeb9594aff65df1a2901ded707f
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_maven_wrapper.yml@036626606065b3b64488ef0611d63713abdcf70c
     with:
       dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
 
@@ -29,7 +29,7 @@ jobs:
       contents: write
       packages: read
       pull-requests: write
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_upstream.yml@06f843e3b039c590fecbaa2aca75a27bf1e4dd7c
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_upstream.yml@036626606065b3b64488ef0611d63713abdcf70c
     with:
       upstream_repository: nats-io/nats-server
       upstream_property: nats-server.version
