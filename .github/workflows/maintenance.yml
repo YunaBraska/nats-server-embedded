@@ -29,8 +29,9 @@ jobs:
       contents: write
       packages: read
       pull-requests: write
-    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_upstream.yml@036626606065b3b64488ef0611d63713abdcf70c
+    uses: YunaBraska/YunaBraska/.github/workflows/wc_java_update_upstream.yml@53bb53015128844a78578713f71171a9513e2885
     with:
       upstream_repository: nats-io/nats-server
       upstream_property: nats-server.version
+      published_artifact: berlin.yuna:nats-server
       dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
